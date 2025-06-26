@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Card from './Card';
 import axios from 'axios';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://837349c8-5505-4011-b174-e9237ce65490-00-2iajakatkpxxf.spock.replit.dev';
@@ -48,16 +49,13 @@ function MTGSearcher() {
 
       {loading && <p className="mt-4">Loading...</p>}
       {error && <p className="mt-4 text-red-400">{error}</p>}
+      {!loading && cards.length === 0 && !error && (
+        <p className="mt-4">No cards found.</p>
+      )}
 
       <div className="mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {cards.map((card, index) => (
-          <div key={index} className="bg-gray-800 p-3 rounded-lg">
-            <img src={card.image_url} alt={card.name} className="rounded mb-2" />
-            <h3 className="font-bold">{card.name}</h3>
-            <p>{card.type_line}</p>
-            <p className="text-sm">{card.oracle_text}</p>
-            <p className="text-green-300">${card.prices_usd}</p>
-          </div>
+          <Card key={index} card={card} />
         ))}
       </div>
     </div>
